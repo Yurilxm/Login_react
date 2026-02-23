@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Snowfall from 'react-snowfall'
+import { Toaster } from 'react-hot-toast'
 import Login from './pages/Login'
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           bg-white/10 backdrop-blur text-white shadow-lg hover:bg-white/20 transition z-20">
         {snowOn ? '❄️ Neve ON' : '❄️ Neve OFF'}
       </button>
+      <Toaster position="top-right" />
     </div>
   )
 }
