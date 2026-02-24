@@ -38,10 +38,13 @@ function Register({ onSwitch }) {
       {/* SETA → LOGIN */}
       <button
         onClick={onSwitch}
-        className="absolute top-4 right-4 text-gray-400 hover:text-white"
+        className="absolute top-4 right-4 flex items-center gap-2 text-gray-400 hover:text-white transition transform hover:scale-110 group"
         title="Já tenho conta"
       >
-        <i className="ri-login-box-line text-xl" />
+        <span className="text-xs opacity-0 group-hover:opacity-100 transition">
+          Já tenho conta
+        </span>
+        <i className="ri-login-box-line text-xl animate-pulse" />
       </button>
 
       <h1 className="text-2xl font-bold text-white mb-6 text-center">

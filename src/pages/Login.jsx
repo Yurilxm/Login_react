@@ -7,6 +7,7 @@ function Login({ onSwitch }) {
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [rememberMe, setRememberMe] = useState(false)
 
   function handleSubmit() {
     if (!email || !password) {
@@ -29,10 +30,13 @@ function Login({ onSwitch }) {
       {/* SETA → CRIAR CONTA */}
       <button
         onClick={onSwitch}
-        className="absolute top-4 right-4 text-gray-400 hover:text-white"
+        className="absolute top-4 right-4 flex items-center gap-2 text-gray-400 hover:text-white transition transform hover:scale-110 group"
         title="Criar conta"
       >
-        <i className="ri-user-add-line text-xl" />
+        <span className="text-xs opacity-0 group-hover:opacity-100 transition">
+          Criar conta
+        </span>
+        <i className="ri-user-add-line text-xl animate-pulse" />
       </button>
 
       <h1 className="text-2xl font-bold text-white mb-6 text-center">
@@ -59,11 +63,30 @@ function Login({ onSwitch }) {
         <button
           type="button"
           onClick={() => setShowPassword(!showPassword)}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition"
         >
           <i className={`ri-eye${showPassword ? '' : '-off'}-line text-xl`} />
         </button>
       </div>
+
+      <div className="flex items-center justify-between mt-4 text-sm text-gray-300">
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={rememberMe}
+              onChange={() => setRememberMe(!rememberMe)}
+              className="accent-blue-500 w-4 h-4"
+            />
+            Lembrar de mim
+          </label>
+
+          <button
+            type="button"
+            className="text-blue-400 hover:text-blue-300 transition"
+          >
+            Esqueci minha senha
+          </button>
+        </div>
 
       <div className="h-6" />
 
