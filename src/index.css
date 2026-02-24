@@ -15,3 +15,27 @@
 .rotate-y-180 {
   transform: rotateY(180deg);
 }
+
+@keyframes gradient-move {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-gradient {
+  background: linear-gradient(
+    120deg,
+    #0f172a,
+    #1e293b,
+    #020617,
+    #1e293b   /* volta contraste */
+  );
+  background-size: 400% 400%;
+  animation: gradient-move 16s ease-in-out infinite;
+}
