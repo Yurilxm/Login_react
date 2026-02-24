@@ -3,7 +3,7 @@ import toast from 'react-hot-toast'
 import Input from '../components/Input'
 import Button from '../components/Button'
 
-function Login({ onSwitch }) {
+function Login({ onSwitch, onForgotPassword }) {
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -82,6 +82,7 @@ function Login({ onSwitch }) {
 
           <button
             type="button"
+            onClick={onForgotPassword}
             className="text-blue-400 hover:text-blue-300 transition"
           >
             Esqueci minha senha
