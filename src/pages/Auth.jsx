@@ -9,7 +9,7 @@ function Auth() {
 
   return (
     <>
-      <div className="relative w-full max-w-md h-[520px] perspective">
+      <div className="relative w-full max-w-md h-[520px] perspective mt-[-30px]">
 
         <div
           className={`relative w-full h-full transition-transform duration-800 ease-in-out transform-style-preserve-3d

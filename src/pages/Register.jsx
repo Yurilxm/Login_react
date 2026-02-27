@@ -2,7 +2,6 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import Input from '../components/Input'
 import Button from '../components/Button'
-import { Rule } from 'postcss'
 
 function Register({ onSwitch }) {
   const [showPassword, setShowPassword] = useState(false)
@@ -67,7 +66,7 @@ function Register({ onSwitch }) {
         onChange={(e) => setEmail(e.target.value)}
       />
 
-      <div className="h-4" />
+      <div className="h-3" />
 
       <div className="relative">
         <Input
@@ -86,7 +85,7 @@ function Register({ onSwitch }) {
         </button>
       </div>
 
-      <div className="h-4" />
+      <div className="h-3" />
 
       <div className="relative">
         <Input
@@ -107,7 +106,7 @@ function Register({ onSwitch }) {
 
       <PasswordStrength level={rulesCount} />
 
-      <div className="mt-4 bg-black/20 rounded-lg p-4 text-sm text-white space-y-2">
+      <div className="mt-3 bg-black/20 rounded-lg p-2 text-sm text-white space-y-1">
         <p className="font-semibold mb-2">
           Sua senha precisa conter:
         </p>
@@ -120,7 +119,7 @@ function Register({ onSwitch }) {
 
       </div>
 
-      <div className="h-6" />
+      <div className="h-3" />
 
       <Button onClick={handleSubmit} disabled={!isPasswordValid || !passwordsMatch}>
         Criar conta
