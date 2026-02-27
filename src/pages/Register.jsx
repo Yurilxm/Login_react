@@ -2,18 +2,22 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import Input from '../components/Input'
 import Button from '../components/Button'
+import { Rule } from 'postcss'
 
 function Register({ onSwitch }) {
   const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
 
   const passwordRules = validatePassword(password)
   const rulesCount = Object.values(passwordRules).filter(Boolean).length
   const isPasswordValid = rulesCount === 4
+  const passwordsMatch = password && confirmPassword && password === confirmPassword
 
   function handleSubmit() {
-    if (!email || !password) {
+    if (!email || !password || !confirmPassword) {
       toast.error('Preencha todos os campos')
       return
     }
@@ -26,6 +30,11 @@ function Register({ onSwitch }) {
 
     if (!isPasswordValid) {
       toast.error('A senha não atende aos requisitos')
+      return
+    }
+
+    if (!passwordsMatch) {
+      toast.error('As senhas não coincidem')
       return
     }
 
@@ -77,6 +86,25 @@ function Register({ onSwitch }) {
         </button>
       </div>
 
+      <div className="h-4" />
+
+      <div className="relative">
+        <Input
+          type={showConfirmPassword ? 'text' : 'password'}
+          placeholder="Confirme a senha"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+
+        <button
+          type="button"
+          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+        >
+          <i className={`ri-eye${showConfirmPassword ? '' : '-off'}-line text-xl`} />
+        </button>
+      </div>
+
       <PasswordStrength level={rulesCount} />
 
       <div className="mt-4 bg-black/20 rounded-lg p-4 text-sm text-white space-y-2">
@@ -88,11 +116,13 @@ function Register({ onSwitch }) {
         <RuleItem valid={passwordRules.lowercase} text="1 letra minúscula" />
         <RuleItem valid={passwordRules.uppercase} text="1 letra maiúscula" />
         <RuleItem valid={passwordRules.number} text="1 número" />
+        <RuleItem valid={passwordsMatch} text="As senhas são iguais" />
+
       </div>
 
       <div className="h-6" />
 
-      <Button onClick={handleSubmit} disabled={!isPasswordValid}>
+      <Button onClick={handleSubmit} disabled={!isPasswordValid || !passwordsMatch}>
         Criar conta
       </Button>
     </div>
