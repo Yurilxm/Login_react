@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import Particles, { initParticlesEngine } from "@tsparticles/react"
 import { loadSlim } from "@tsparticles/slim"
 
-function ParticlesBackground() {
+export default function ParticlesBackground({ interactive = false }) {
   const [engineReady, setEngineReady] = useState(false)
 
   useEffect(() => {
@@ -28,18 +28,9 @@ function ParticlesBackground() {
               area: 800,
             },
           },
-
-          color: {
-            value: "#ffffff",
-          },
-
-          opacity: {
-            value: 0.25,
-          },
-
-          size: {
-            value: { min: 1, max: 3 },
-          },
+          color: { value: "#ffffff" },
+          opacity: { value: 0.25 },
+          size: { value: { min: 1, max: 3 } },
 
           links: {
             enable: true,
@@ -52,31 +43,29 @@ function ParticlesBackground() {
           move: {
             enable: true,
             speed: 0.7,
-            outModes: {
-              default: "out",
-            },
+            outModes: { default: "out" },
           },
         },
 
-        interactivity: {
-          events: {
-            onHover: {
-              enable: true,
-              mode: "repulse", // 👈 reage ao mouse
-            },
-          },
-          modes: {
-            repulse: {
-              distance: 120,
-              duration: 0.4,
-            },
-          },
-        },
+        interactivity: interactive
+          ? {
+              events: {
+                onHover: {
+                  enable: true,
+                  mode: "repulse",
+                },
+              },
+              modes: {
+                repulse: {
+                  distance: 120,
+                  duration: 0.4,
+                },
+              },
+            }
+          : {},
 
         detectRetina: true,
       }}
     />
   )
 }
-
-export default ParticlesBackground

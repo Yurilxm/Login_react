@@ -1,21 +1,54 @@
-import { Toaster } from 'react-hot-toast'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+
+import ProtectedRoute from './routes/ProtectedRoute'
+import AuthLayout from './layouts/AuthLayout'
+import AppLayout from './layouts/AppLayout'
+
 import Auth from './pages/Auth'
-import ParticlesBackground from './components/ParticlesBackground'
+import Robot from './pages/Robot'
+import Home from './pages/Home'
 
 function App() {
   return (
-    <div className="relative min-h-screen flex items-center justify-center animated-gradient overflow-hidden">
-      
-      {/* Background animado */}
-      <ParticlesBackground />
+    <BrowserRouter>
+      <Routes>
 
-      {/* Conteúdo */}
-      <div className="relative z-10 w-full flex justify-center">
-        <Auth />
-      </div>
+        <Route
+          path="/login"
+          element={
+            <AuthLayout>
+              <Auth />
+            </AuthLayout>
+          }
+        />
 
-      <Toaster position="top-right" />
-    </div>
+        <Route
+          path="/robot"
+          element={
+            <ProtectedRoute>
+              <AppLayout>
+                <Robot />
+              </AppLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute>
+              <AppLayout>
+                <Home />
+              </AppLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="*" element={<Navigate to="/login" />} />
+
+      </Routes>
+    </BrowserRouter>
   )
 }
 

@@ -1,13 +1,23 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 import Input from '../components/Input'
 import Button from '../components/Button'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
 
 function Login({ onSwitch, onForgotPassword }) {
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [rememberMe, setRememberMe] = useState(false)
+  const navigate = useNavigate()
+  const { login, isAuthenticated } = useAuth()
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/robot')
+    }
+  }, [isAuthenticated, navigate])
 
   function handleSubmit() {
     if (!email || !password) {
@@ -21,7 +31,14 @@ function Login({ onSwitch, onForgotPassword }) {
       return
     }
 
-    toast.success('Login válido!')
+    const result = login(email, password, rememberMe)
+    if (result?.error) {
+      toast.error(result.error)
+      return
+    }
+
+    toast.success('Login realizado com sucesso!')
+    navigate('/robot')
   }
 
   return (

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Login from './Login'
 import Register from './Register'
-import ForgotPasswordModal from '../components/ForgotPasswordMOdal'
+import ForgotPasswordModal from '../components/ForgotPasswordModal'
 
 function Auth() {
   const [isLogin, setIsLogin] = useState(false)
