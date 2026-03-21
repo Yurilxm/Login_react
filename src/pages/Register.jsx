@@ -2,8 +2,11 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import Input from '../components/Input'
 import Button from '../components/Button'
+import { useAuth } from '../contexts/AuthContext'
 
 function Register({ onSwitch }) {
+  const { register } = useAuth()
+
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [email, setEmail] = useState('')
@@ -15,7 +18,7 @@ function Register({ onSwitch }) {
   const isPasswordValid = rulesCount === 4
   const passwordsMatch = password && confirmPassword && password === confirmPassword
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (!email || !password || !confirmPassword) {
       toast.error('Preencha todos os campos')
       return
@@ -34,6 +37,13 @@ function Register({ onSwitch }) {
 
     if (!passwordsMatch) {
       toast.error('As senhas não coincidem')
+      return
+    }
+
+    const result = await register(email, password)
+
+    if (result?.error) {
+      toast.error(result.error)
       return
     }
 

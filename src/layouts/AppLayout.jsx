@@ -3,11 +3,14 @@ import ParticlesBackground from "../components/ParticlesBackground";
 
 export default function AppLayout({ children }) {
   return (
-    <div className="min-h-screen bg-zinc-900 text-white">
-      {/* Depois entra Topbar, Sidebar etc */}
-      {children}
+    <div className="relative min-h-screen bg-zinc-900 text-white">
+      
+      <div className="relative z-10">
+        {children}
+      </div>
 
       <ParticlesBackground />
+
     </div>
   )
 }

@@ -1,5 +1,4 @@
 import { createContext, useContext, useState } from 'react'
-import { users } from '../mocks/users'
 
 const AuthContext = createContext(null)
 
@@ -15,27 +14,56 @@ export function AuthProvider({ children }) {
 
   const isAuthenticated = !!user
 
-  console.log('USER AO INICIAR:', user)
-  console.log('IS AUTH:', isAuthenticated)
+  async function login(email, password, remember = false) {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/login/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      })
 
-  function login(email, password, remember = false) {
-    const foundUser = users.find(
-      (u) => u.email === email && u.password === password
-    )
+      const data = await response.json()
 
-    if (!foundUser) {
-      return { error: 'Email ou senha inválidos' }
+      if (!response.ok) {
+        return { error: data.error || 'Erro ao fazer login' }
+      }
+
+      setUser(data)
+
+      if (remember) {
+        localStorage.setItem('user', JSON.stringify(data))
+      } else {
+        sessionStorage.setItem('user', JSON.stringify(data))
+      }
+
+      return { success: true }
+    } catch (error) {
+      return { error: 'Erro de conexão com o servidor' }
     }
+  }
 
-    setUser(foundUser)
+  async function register(email, password) {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/register/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      })
 
-    if (remember) {
-      localStorage.setItem('user', JSON.stringify(foundUser))
-    } else {
-      sessionStorage.setItem('user', JSON.stringify(foundUser))
+      const data = await response.json()
+
+      if (!response.ok) {
+        return { error: data.error || 'Erro ao cadastrar' }
+      }
+
+      return { success: true }
+    } catch (error) {
+      return { error: 'Erro de conexão com o servidor' }
     }
-
-    return { success: true }
   }
 
   function logout() {
@@ -45,7 +73,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   )

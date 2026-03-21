@@ -19,7 +19,7 @@ function Login({ onSwitch, onForgotPassword }) {
     }
   }, [isAuthenticated, navigate])
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (!email || !password) {
       toast.error('Preencha todos os campos')
       return
@@ -31,7 +31,7 @@ function Login({ onSwitch, onForgotPassword }) {
       return
     }
 
-    const result = login(email, password, rememberMe)
+    const result = await login(email, password, rememberMe)
     if (result?.error) {
       toast.error(result.error)
       return
