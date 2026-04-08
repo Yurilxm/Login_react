@@ -16,7 +16,7 @@ export function AuthProvider({ children }) {
   async function login(email, password, remember = false, twoFactorCode) {
     try {
       const payload = {
-        username: email,
+        email: email,
         password,
         two_factor_code: twoFactorCode,
       }
