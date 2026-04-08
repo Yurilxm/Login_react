@@ -39,3 +39,13 @@
   background-size: 400% 400%;
   animation: gradient-move 16s ease-in-out infinite;
 }
+
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
